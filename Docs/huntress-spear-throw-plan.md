@@ -1,54 +1,44 @@
-# Huntress Spear Throw Plan
+# Huntress Spear Throw Notes
 
-`HuntressAtk3` is not a body animation like `HuntressAtk1` or `HuntressAtk2`.
-The current `Attack3.png` sheet shows the thrown spear traveling without the Huntress body.
+`Attack3.png` is a full Huntress spear-throw body animation. The missing piece is not the body art; it is the projectile scene and the animation call that spawns it.
 
-## Current Decision
+## Current State
 
-Defer spear throw for now.
-The Huntress currently uses only:
+- Huntress melee combo currently uses `HuntressAtk1` and `HuntressAtk2`.
+- Shared player behavior lives in `Scenes/PlayerScenes/player_character.gd`.
+- Huntress-specific animation names and hitbox tuning live in `Scenes/PlayerScenes/Huntress/huntress.gd`.
 
-- `HuntressAtk1`
-- `HuntressAtk2`
+## Implementation Steps
 
-These are implemented as melee attacks with a separate `AttackHitbox`, matching the Medieval King melee setup.
+1. Add `HuntressAtk3` to `huntress.tscn` using the 7 frames from `Attack3.png`.
+2. Create `Scenes/PlayerScenes/Huntress/spear_projectile.tscn`.
+3. Add a call track in `AnimationPlayer` at the release frame that calls `spawn_spear()`.
+4. Add `HuntressAtk3` and its matching hitbox/call animation name to `attack_animations` and `attack_hitbox_animations` in `huntress.gd`.
 
-## Why Atk3 Is Deferred
-
-- The body sprite is not present in the `Attack3.png` sheet.
-- Mixing projectile travel frames into the Huntress body `AnimatedSprite2D` would make the character disappear during the attack.
-- Projectile logic should be separate from body animation logic.
-
-## Recommended Future Implementation
-
-Create a separate projectile scene, for example:
+## Projectile Scene Shape
 
 ```text
-Scenes/PlayerScenes/Huntress/spear_projectile.tscn
-- Area2D
-- AnimatedSprite2D
-- CollisionShape2D
+SpearProjectile (Area2D)
+  AnimatedSprite2D
+  CollisionShape2D
 ```
 
-Recommended future flow:
+Projectile script responsibilities:
 
-1. Add a real body throw animation for the Huntress if one becomes available.
-2. Play that throw animation on the Huntress body.
-3. At the release frame, spawn `spear_projectile.tscn`.
-4. Let the projectile handle:
-   - forward travel
-   - collision
-   - enemy damage
-   - despawn on hit or timeout
+- Move forward using a passed-in `direction`.
+- Damage bodies in the `enemies` group that have `take_damage`.
+- Free itself on hit, timeout, or max travel distance.
 
-## Current Asset Notes
+## Spawn Example
 
-- `Attack1.png`: 5 frames, body melee slash
-- `Attack2.png`: 5 frames, body melee slash
-- `Attack3.png`: 7 frames, projectile travel sheet without body
-- `Spear move.png`: projectile motion support asset
-- `Spear.png`: static projectile asset
+```gdscript
+const SPEAR_PROJECTILE = preload("res://Scenes/PlayerScenes/Huntress/spear_projectile.tscn")
 
-## Important Constraint
+func spawn_spear() -> void:
+	var spear = SPEAR_PROJECTILE.instantiate()
+	spear.global_position = global_position + Vector2(attack_pivot.scale.x * 20.0, -10.0)
+	spear.direction = attack_pivot.scale.x
+	get_parent().add_child(spear)
+```
 
-Do not add `HuntressAtk3` to the melee combo until a proper body throw animation or dedicated projectile flow is in place.
+Keep the throw as a committed grounded attack, matching the shared player controller.
