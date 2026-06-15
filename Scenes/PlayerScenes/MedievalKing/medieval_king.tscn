@@ -6,7 +6,6 @@
 [ext_resource type="Texture2D" uid="uid://dkbnokt5ubind" path="res://Assets/PlayerAssets/Medieval King Pack 2/Sprites/Attack3.png" id="3_ie666"]
 [ext_resource type="Texture2D" uid="uid://dvb2s44ieaoa7" path="res://Assets/PlayerAssets/Medieval King Pack 2/Sprites/Death.png" id="4_bs8ys"]
 [ext_resource type="Texture2D" uid="uid://ci1x6mactqj44" path="res://Assets/PlayerAssets/Medieval King Pack 2/Sprites/Fall.png" id="5_4lpx1"]
-[ext_resource type="Texture2D" uid="uid://cmkmejosqkvvo" path="res://Assets/PlayerAssets/Medieval King Pack 2/Sprites/Take Hit.png" id="6_cssr4"]
 [ext_resource type="Texture2D" uid="uid://brxi0avaoqktx" path="res://Assets/PlayerAssets/Medieval King Pack 2/Sprites/Take Hit - white silhouette.png" id="7_wibwk"]
 [ext_resource type="Texture2D" uid="uid://ci5e757nbhb8l" path="res://Assets/PlayerAssets/Medieval King Pack 2/Sprites/Idle.png" id="8_283rk"]
 [ext_resource type="Texture2D" uid="uid://bdoo3otxcuq0v" path="res://Assets/PlayerAssets/Medieval King Pack 2/Sprites/Jump.png" id="9_15fx2"]
@@ -91,22 +90,6 @@ region = Rect2(0, 0, 160, 111)
 [sub_resource type="AtlasTexture" id="AtlasTexture_8j5th"]
 atlas = ExtResource("5_4lpx1")
 region = Rect2(160, 0, 160, 111)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_41rnr"]
-atlas = ExtResource("6_cssr4")
-region = Rect2(0, 0, 160, 111)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_exv5p"]
-atlas = ExtResource("6_cssr4")
-region = Rect2(160, 0, 160, 111)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_65vg6"]
-atlas = ExtResource("6_cssr4")
-region = Rect2(320, 0, 160, 111)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_fjvyj"]
-atlas = ExtResource("6_cssr4")
-region = Rect2(480, 0, 160, 111)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_na3vk"]
 atlas = ExtResource("7_wibwk")
@@ -285,23 +268,6 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_41rnr")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_exv5p")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_65vg6")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_fjvyj")
-}],
-"loop": false,
-"name": &"MedievalKingHit",
-"speed": 8.0
-}, {
-"frames": [{
-"duration": 1.0,
 "texture": SubResource("AtlasTexture_na3vk")
 }, {
 "duration": 1.0,
@@ -314,7 +280,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_1x8wv")
 }],
 "loop": false,
-"name": &"MedievalKingHit2",
+"name": &"MedievalKingHit",
 "speed": 5.0
 }, {
 "frames": [{
@@ -392,7 +358,7 @@ radius = 13.0
 height = 58.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ie666"]
-size = Vector2(72.25, 48)
+size = Vector2(30, 28)
 
 [sub_resource type="Animation" id="Animation_6wvoj"]
 resource_name = "Atk1Hitbox"
@@ -479,9 +445,9 @@ script = ExtResource("1_6wvoj")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=542150517]
 position = Vector2(-1, -1)
 sprite_frames = SubResource("SpriteFrames_s5q13")
-animation = &"MedievalKingIdle"
+animation = &"MedievalKingHit"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1178063518]
+[node name="BodyCollision" type="CollisionShape2D" parent="." unique_id=1178063518]
 position = Vector2(1, 22)
 shape = SubResource("CapsuleShape2D_g70e4")
 
@@ -490,11 +456,16 @@ shape = SubResource("CapsuleShape2D_g70e4")
 [node name="AttackHitbox" type="Area2D" parent="AttackPivot" unique_id=250401382]
 monitorable = false
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackPivot/AttackHitbox" unique_id=328836948]
-position = Vector2(36.875, 24)
+[node name="AttackArea" type="CollisionShape2D" parent="AttackPivot/AttackHitbox" unique_id=328836948]
+position = Vector2(16, 18)
 shape = SubResource("RectangleShape2D_ie666")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=547541138]
 libraries/ = SubResource("AnimationLibrary_4lpx1")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1902732401]
+zoom = Vector2(1.5, 1.5)
+position_smoothing_enabled = true
+position_smoothing_speed = 6.0
 
 [connection signal="body_entered" from="AttackPivot/AttackHitbox" to="." method="_on_attack_hitbox_body_entered"]

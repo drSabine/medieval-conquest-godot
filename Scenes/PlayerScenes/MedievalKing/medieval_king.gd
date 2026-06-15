@@ -1,133 +1,37 @@
-extends CharacterBody2D
+extends "res://Scenes/PlayerScenes/player_character.gd"
 
-@export_group("Movement")
-@export var speed := 260.0
-@export var jump_velocity := -380.0
+func configure_character() -> void:
+	speed = 260.0
+	jump_velocity = -380.0
+	combo_reset_time = 0.4
 
-@export_group("Combat")
-@export var attack_damage := 10
+	# Animation names from medieval_king.tscn SpriteFrames.
+	idle_animation = "MedievalKingIdle"
+	run_animation = "MedievalKingRun"
+	jump_animation = "MedievalKingJump"
+	fall_animation = "MedievalKingFall"
+	hit_animation = "MedievalKingHit"
 
-@onready var anim: AnimatedSprite2D = $AnimatedSprite2D
-@onready var attack_pivot: Node2D = $AttackPivot
-@onready var attack_hitbox: Area2D = $AttackPivot/AttackHitbox
-@onready var attack_shape: CollisionShape2D = $AttackPivot/AttackHitbox/CollisionShape2D
-@onready var animation_player: AnimationPlayer = $AnimationPlayer
+	# Combo order and matching AnimationPlayer hitbox tracks.
+	attack_animations = [
+		"MedievalKingAtk1",
+		"MedievalKingAtk2",
+		"MedievalKingAtk3",
+	]
+	attack_hitbox_animations = [
+		"Atk1Hitbox",
+		"Atk2Hitbox",
+		"Atk3Hitbox",
+	]
 
-const IDLE_ANIMATION := "MedievalKingIdle"
-const RUN_ANIMATION := "MedievalKingRun"
-const JUMP_ANIMATION := "MedievalKingJump"
-const FALL_ANIMATION := "MedievalKingFall"
-
-const ATTACK_ANIMATIONS := [
-	"MedievalKingAtk1",
-	"MedievalKingAtk2",
-	"MedievalKingAtk3",
-]
-
-const ATTACK_HITBOX_ANIMATIONS := [
-	"Atk1Hitbox",
-	"Atk2Hitbox",
-	"Atk3Hitbox",
-]
-
-var attack_index := -1
-var is_attacking := false
-var hit_targets: Array[Node] = []
-
-func _ready() -> void:
-	attack_hitbox.monitoring = false
-	anim.animation_finished.connect(_on_animation_finished)
-
-func _physics_process(delta: float) -> void:
-	if not is_on_floor():
-		velocity += get_gravity() * delta
-
-	if Input.is_action_just_pressed("jump") and is_on_floor():
-		velocity.y = jump_velocity
-
-	var direction := Input.get_axis("move_left", "move_right")
-	if direction != 0.0:
-		velocity.x = direction * speed
-		update_facing(direction)
-	else:
-		velocity.x = move_toward(velocity.x, 0.0, speed)
-
-	if Input.is_action_just_pressed("attack"):
-		start_attack()
-
-	move_and_slide()
-	update_animation()
-
-func start_attack() -> void:
-	if is_attacking:
-		return
-
-	is_attacking = true
-	hit_targets.clear()
-	attack_index = (attack_index + 1) % ATTACK_ANIMATIONS.size()
-	configure_attack_hitbox(attack_index)
-
-	anim.play(ATTACK_ANIMATIONS[attack_index])
-	animation_player.play(ATTACK_HITBOX_ANIMATIONS[attack_index])
-
-func update_animation() -> void:
-	if is_attacking:
-		return
-
-	if not is_on_floor():
-		anim.play(JUMP_ANIMATION if velocity.y < 0.0 else FALL_ANIMATION)
-	elif absf(velocity.x) > 5.0:
-		anim.play(RUN_ANIMATION)
-	else:
-		anim.play(IDLE_ANIMATION)
-
-func update_facing(direction: float) -> void:
-	if direction > 0.0:
-		anim.flip_h = false
-		attack_pivot.scale.x = 1.0
-	elif direction < 0.0:
-		anim.flip_h = true
-		attack_pivot.scale.x = -1.0
-
-func enable_attack_hitbox() -> void:
-	attack_hitbox.monitoring = true
-	for body in attack_hitbox.get_overlapping_bodies():
-		_try_hit_body(body)
-
-func disable_attack_hitbox() -> void:
-	attack_hitbox.monitoring = false
-
-func configure_attack_hitbox(index: int) -> void:
-	var rect := attack_shape.shape as RectangleShape2D
-
-	match index:
-		0:
-			rect.size = Vector2(72.0, 48.0)
-			attack_shape.position = Vector2(36.875, 24.0)
-		1:
-			rect.size = Vector2(84.0, 52.0)
-			attack_shape.position = Vector2(42.0, 18.0)
-		2:
-			rect.size = Vector2(96.0, 56.0)
-			attack_shape.position = Vector2(52.0, 22.0)
-
-func _on_animation_finished() -> void:
-	if anim.animation in ATTACK_ANIMATIONS:
-		is_attacking = false
-		disable_attack_hitbox()
-
-func _on_attack_hitbox_body_entered(body: Node2D) -> void:
-	_try_hit_body(body)
-
-func _try_hit_body(body: Node) -> void:
-	if not attack_hitbox.monitoring:
-		return
-	if not body.is_in_group("enemies"):
-		return
-	if body in hit_targets:
-		return
-
-	hit_targets.append(body)
-
-	if body.has_method("take_damage"):
-		body.take_damage(attack_damage)
+	# Per-attack collision tuning.
+	attack_hitbox_sizes = [
+		Vector2(30.0, 28.0),
+		Vector2(34.0, 30.0),
+		Vector2(38.0, 32.0),
+	]
+	attack_hitbox_positions = [
+		Vector2(16.0, 18.0),
+		Vector2(18.0, 17.0),
+		Vector2(20.0, 18.0),
+	]
