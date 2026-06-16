@@ -1,9 +1,17 @@
 extends "res://Scenes/PlayerScenes/player_character.gd"
+## The Knight hero. This script only holds his stats, animation names and attack
+## sounds; all the actual movement/combat logic lives in player_character.gd.
+
+const ATK1_SFX := preload("res://Assets/PlayerAssets/Medieval King Pack 2/Effects/atk1.mp3")
+const ATK2_SFX := preload("res://Assets/PlayerAssets/Medieval King Pack 2/Effects/atk2.mp3")
+const ATK3_SFX := preload("res://Assets/PlayerAssets/Medieval King Pack 2/Effects/atk3.mp3")
 
 func configure_character() -> void:
 	speed = 260.0
 	jump_velocity = -380.0
+	max_health = 120
 	combo_reset_time = 0.4
+	attack_speed_scale = 0.82   # swings a touch slower than the default
 
 	# Animation names from medieval_king.tscn SpriteFrames.
 	idle_animation = "MedievalKingIdle"
@@ -24,14 +32,14 @@ func configure_character() -> void:
 		"Atk3Hitbox",
 	]
 
-	# Per-attack collision tuning.
-	attack_hitbox_sizes = [
-		Vector2(30.0, 28.0),
-		Vector2(34.0, 30.0),
-		Vector2(38.0, 32.0),
+	attack_damages = [
+		8,
+		11,
+		16,
 	]
-	attack_hitbox_positions = [
-		Vector2(16.0, 18.0),
-		Vector2(18.0, 17.0),
-		Vector2(20.0, 18.0),
+
+	attack_sounds = [
+		ATK1_SFX,
+		ATK2_SFX,
+		ATK3_SFX,
 	]

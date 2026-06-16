@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://swhdtr5gdjhd"
+path="res://.godot/imported/atk3.mp3-0afdf303672952feef6cde2d5f47f139.mp3str"
+
+[deps]
+
+source_file="res://Assets/PlayerAssets/Medieval King Pack 2/Effects/atk3.mp3"
+dest_files=["res://.godot/imported/atk3.mp3-0afdf303672952feef6cde2d5f47f139.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

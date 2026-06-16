@@ -354,11 +354,10 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_g70e4"]
-radius = 13.0
-height = 58.0
+height = 40.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ie666"]
-size = Vector2(30, 28)
+size = Vector2(42, 32)
 
 [sub_resource type="Animation" id="Animation_6wvoj"]
 resource_name = "Atk1Hitbox"
@@ -443,12 +442,15 @@ _data = {
 script = ExtResource("1_6wvoj")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=542150517]
-position = Vector2(-1, -1)
+position = Vector2(1.1920929e-07, 1.1920929e-07)
+scale = Vector2(0.72, 0.72)
 sprite_frames = SubResource("SpriteFrames_s5q13")
-animation = &"MedievalKingHit"
+animation = &"MedievalKingAtk3"
+frame = 3
+frame_progress = 1.0
 
 [node name="BodyCollision" type="CollisionShape2D" parent="." unique_id=1178063518]
-position = Vector2(1, 22)
+position = Vector2(1, 16)
 shape = SubResource("CapsuleShape2D_g70e4")
 
 [node name="AttackPivot" type="Node2D" parent="." unique_id=2073766451]
@@ -457,7 +459,7 @@ shape = SubResource("CapsuleShape2D_g70e4")
 monitorable = false
 
 [node name="AttackArea" type="CollisionShape2D" parent="AttackPivot/AttackHitbox" unique_id=328836948]
-position = Vector2(16, 18)
+position = Vector2(24, 16)
 shape = SubResource("RectangleShape2D_ie666")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=547541138]

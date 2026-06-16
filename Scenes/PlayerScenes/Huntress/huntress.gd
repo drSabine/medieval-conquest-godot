@@ -1,8 +1,14 @@
 extends "res://Scenes/PlayerScenes/player_character.gd"
+## The Huntress hero. This script only holds her stats, animation names and attack
+## sounds; all the actual movement/combat logic lives in player_character.gd.
+
+const ATK1_SFX := preload("res://Assets/PlayerAssets/Huntress/Effects/atk1.mp3")
+const ATK2_SFX := preload("res://Assets/PlayerAssets/Huntress/Effects/atk2.mp3")
 
 func configure_character() -> void:
 	speed = 300.0
 	jump_velocity = -400.0
+	max_health = 120
 	combo_reset_time = 1.5
 
 	# Animation names from huntress.tscn SpriteFrames.
@@ -22,12 +28,12 @@ func configure_character() -> void:
 		"Atk2Hitbox",
 	]
 
-	# Per-attack collision tuning.
-	attack_hitbox_sizes = [
-		Vector2(30.0, 24.0),
-		Vector2(34.0, 26.0),
+	attack_damages = [
+		12,
+		17,
 	]
-	attack_hitbox_positions = [
-		Vector2(16.0, 4.0),
-		Vector2(18.0, 4.0),
+
+	attack_sounds = [
+		ATK1_SFX,
+		ATK2_SFX,
 	]
