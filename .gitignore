@@ -1,3 +1,17 @@
 # Godot 4+ specific ignores
 .godot/
 /android/
+
+# Godot editor atomic-save leftovers
+*.tmp
+
+# Local hand-made scene backups (kept on disk, not tracked)
+*.bak
+*.precollision
+*.precollision2
+*.pregates
+*.prestairs
+
+# Python tooling cache and generated map preview images
+__pycache__/
+MapTools/preview/
