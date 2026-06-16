@@ -11,9 +11,13 @@ config_version=5
 [application]
 
 config/name="medieval-conquest"
-run/main_scene="res://Scenes/Main/main.tscn"
+run/main_scene="res://Scenes/Start/start_menu.tscn"
 config/features=PackedStringArray("4.6", "Mobile")
 config/icon="res://icon.svg"
+
+[autoload]
+
+GameState="*res://Scripts/game_state.gd"
 
 [display]
 
