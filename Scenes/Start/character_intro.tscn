@@ -1,0 +1,77 @@
+[gd_scene format=3 uid="uid://scu5yw1p2fw7"]
+
+[ext_resource type="Script" uid="uid://7wep0ni6h2qs" path="res://Scenes/Start/character_intro.gd" id="1_intro"]
+[ext_resource type="AudioStream" uid="uid://cim0mp8ddn0uf" path="res://Scenes/SFX and BG/start-of-the-game.mp3" id="audio"]
+
+[node name="CharacterIntro" type="Control" unique_id=1676005710]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_intro")
+
+[node name="Background" type="ColorRect" parent="." unique_id=1668270609]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.035, 0.035, 0.05, 1)
+
+[node name="Stage" type="ColorRect" parent="." unique_id=1998355535]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -260.0
+offset_top = -240.0
+offset_right = 260.0
+offset_bottom = 60.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.07, 0.07, 0.1, 0.55)
+
+[node name="Sprite" type="Sprite2D" parent="." unique_id=1941978334]
+position = Vector2(683, 320)
+hframes = 8
+
+[node name="Title" type="Label" parent="." unique_id=1608575629]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -560.0
+offset_top = 130.0
+offset_right = 560.0
+offset_bottom = 250.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.88, 0.76, 0.43, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 6
+theme_override_font_sizes/font_size = 34
+text = "You Have Chosen..."
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+clip_text = true
+
+[node name="Audio" type="AudioStreamPlayer" parent="." unique_id=1077650139]
+stream = ExtResource("audio")
+
+[node name="Fade" type="ColorRect" parent="." unique_id=797357267]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 1)

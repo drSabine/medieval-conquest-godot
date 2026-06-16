@@ -1,0 +1,171 @@
+[gd_scene format=3 uid="uid://bqvmcr01c2j5e"]
+
+[ext_resource type="Script" uid="uid://bj0fhkyifngk1" path="res://Scenes/Start/start_menu.gd" id="1_start"]
+[ext_resource type="FontFile" uid="uid://c27aetijfvt07" path="res://Assets/Fonts/Minecraft.ttf" id="3_pixel"]
+[ext_resource type="Texture2D" uid="uid://ci5e757nbhb8l" path="res://Assets/PlayerAssets/Medieval King Pack 2/Sprites/Idle.png" id="4_king"]
+[ext_resource type="Texture2D" uid="uid://cxjydv7tggf4y" path="res://Assets/PlayerAssets/Huntress/Idle.png" id="5_hun"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_king"]
+atlas = ExtResource("4_king")
+region = Rect2(0, 0, 160, 111)
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_normal"]
+content_margin_left = 18.0
+content_margin_top = 10.0
+content_margin_right = 18.0
+content_margin_bottom = 10.0
+bg_color = Color(0.1, 0.09, 0.12, 0.95)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.5, 0.42, 0.22, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_hover"]
+content_margin_left = 18.0
+content_margin_top = 10.0
+content_margin_right = 18.0
+content_margin_bottom = 10.0
+bg_color = Color(0.2, 0.16, 0.1, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.95, 0.8, 0.36, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hun"]
+atlas = ExtResource("5_hun")
+region = Rect2(0, 0, 150, 150)
+
+[node name="StartMenu" type="Control" unique_id=1248631409]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_start")
+
+[node name="Background" type="ColorRect" parent="." unique_id=748394237]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.035, 0.035, 0.05, 1)
+
+[node name="Title" type="Label" parent="." unique_id=2640117]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -500.0
+offset_top = 82.0
+offset_right = 500.0
+offset_bottom = 148.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.95, 0.82, 0.36, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("3_pixel")
+theme_override_font_sizes/font_size = 46
+text = "MEDIEVAL CONQUEST"
+horizontal_alignment = 1
+clip_text = true
+
+[node name="Subtitle" type="Label" parent="." unique_id=1210636883]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -300.0
+offset_top = 160.0
+offset_right = 300.0
+offset_bottom = 188.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.7, 0.7, 0.78, 1)
+theme_override_fonts/font = ExtResource("3_pixel")
+theme_override_font_sizes/font_size = 18
+text = "Choose your champion"
+horizontal_alignment = 1
+
+[node name="Cards" type="HBoxContainer" parent="." unique_id=415848051]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -360.0
+offset_top = -40.0
+offset_right = 360.0
+offset_bottom = 250.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 80
+
+[node name="KnightCard" type="VBoxContainer" parent="Cards" unique_id=1282537811]
+layout_mode = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="KnightPortrait" type="Control" parent="Cards/KnightCard" unique_id=2120057700]
+custom_minimum_size = Vector2(260, 200)
+layout_mode = 2
+
+[node name="Sprite" type="Sprite2D" parent="Cards/KnightCard/KnightPortrait" unique_id=769564431]
+position = Vector2(130.95767, 76.06249)
+scale = Vector2(2.5367458, 2.4515767)
+texture = SubResource("AtlasTexture_king")
+
+[node name="KnightButton" type="Button" parent="Cards/KnightCard" unique_id=639905702]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.88, 0.6, 1)
+theme_override_colors/font_hover_color = Color(1, 0.95, 0.7, 1)
+theme_override_fonts/font = ExtResource("3_pixel")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBox_normal")
+theme_override_styles/pressed = SubResource("StyleBox_hover")
+theme_override_styles/hover = SubResource("StyleBox_hover")
+theme_override_styles/focus = SubResource("StyleBox_hover")
+text = "THE KNIGHT"
+clip_text = true
+
+[node name="HuntressCard" type="VBoxContainer" parent="Cards" unique_id=44376162]
+layout_mode = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="HuntressPortrait" type="Control" parent="Cards/HuntressCard" unique_id=695123518]
+custom_minimum_size = Vector2(260, 200)
+layout_mode = 2
+
+[node name="Sprite" type="Sprite2D" parent="Cards/HuntressCard/HuntressPortrait" unique_id=1508110136]
+position = Vector2(140, 132)
+scale = Vector2(2.9266667, 2.9266667)
+texture = SubResource("AtlasTexture_hun")
+
+[node name="HuntressButton" type="Button" parent="Cards/HuntressCard" unique_id=1450853495]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.88, 0.6, 1)
+theme_override_colors/font_hover_color = Color(1, 0.95, 0.7, 1)
+theme_override_fonts/font = ExtResource("3_pixel")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBox_normal")
+theme_override_styles/pressed = SubResource("StyleBox_hover")
+theme_override_styles/hover = SubResource("StyleBox_hover")
+theme_override_styles/focus = SubResource("StyleBox_hover")
+text = "THE HUNTRESS"
+clip_text = true
+
+[connection signal="pressed" from="Cards/KnightCard/KnightButton" to="." method="_on_knight_button_pressed"]
+[connection signal="pressed" from="Cards/HuntressCard/HuntressButton" to="." method="_on_huntress_button_pressed"]
