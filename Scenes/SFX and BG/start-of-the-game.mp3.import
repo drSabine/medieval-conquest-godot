@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://cim0mp8ddn0uf"
+path="res://.godot/imported/start-of-the-game.mp3-8850d60be02968ef5af8eda7b3237352.mp3str"
+
+[deps]
+
+source_file="res://Scenes/SFX and BG/start-of-the-game.mp3"
+dest_files=["res://.godot/imported/start-of-the-game.mp3-8850d60be02968ef5af8eda7b3237352.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
